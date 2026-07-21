@@ -4,6 +4,41 @@ Welcome to the comprehensive guide for deploying a highly available DNS cluster 
 
 This architecture provides active-active and active-passive redundancy at multiple layers (DNS load balancing, VRRP VIP failover, and DNS zone replication) to ensure continuous resolution services even during complete site failures.
 
+## Infrastructure Design
+
+```text
+       Site A (Network: 10.10.10.0/24)                              Site B (Network: 10.10.20.0/24)
++-----------------------------------------------+          +-----------------------------------------------+
+|                                               |          |                                               |
+|            VIP 10.10.10.10 (VRID 51)          |          |            VIP 10.10.20.10 (VRID 52)          |
+|                                               |          |                                               |
+|         DNSDist-A1 (MASTER) 10.10.10.16       |          |         DNSDist-B1 (MASTER) 10.10.20.16       |
+|         DNSDist-A2 (BACKUP) 10.10.10.17       |          |         DNSDist-B2 (BACKUP) 10.10.20.17       |
+|                                               |          |                                               |
+|               |                 |             |          |               |                 |             |
+|             w=100             w=100           |          |             w=100             w=100           |
+|               v                 v             |          |               v                 v             |
+|                                               |          |                                               |
+|            Knot-A2           Knot-A3          |          |            Knot-B2           Knot-B3          |
+|          10.10.10.12       10.10.10.13        |          |          10.10.20.12       10.10.20.13        |
+|             (Slave)           (Slave)         |          |             (Slave)           (Slave)         |
+|               ^                 ^             |          |               ^                 ^             |
+|               |                 |             |          |               |                 |             |
+|               +--------+--------+->-w=1 (remote backup, cross-site) ---<-+--------+--------+             |
+|                        |                      |          |                        |                      |
+|                   tsig-local-a                |          |                   tsig-local-b                |
+|                        |                      |          |                        |                      |
+|                     Knot-A1                   |          |                     Knot-B1                   |
+|                   10.10.10.11                 |          |                   10.10.20.11                 |
+|                (Primary Master)               |          |                (Standby Master)               |
+|                        ^                      |          |                        ^                      |
++------------------------|----------------------+          +------------------------|----------------------+
+                         |                                                          |
+                         |               AXFR/IXFR + NOTIFY                         |
+                         +----------------(tsig-site-sync)--------------------------+
+
+```
+
 ## Table of Contents
 
 ### Documentation
