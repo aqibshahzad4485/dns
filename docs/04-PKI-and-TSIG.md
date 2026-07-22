@@ -31,6 +31,10 @@ key:
   - id: tsig-local-a
     algorithm: hmac-sha256
     secret: "base64_encoded_secret_here"
+  
+  - id: tsig-local-b
+    algorithm: hmac-sha256
+    secret: "base64_encoded_secret_here"
 ```
 
 These keys are then referenced in the `remote:` blocks and `acl:` blocks to enforce authenticated communication.

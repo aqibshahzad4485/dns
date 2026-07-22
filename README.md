@@ -44,8 +44,8 @@ This architecture provides active-active and active-passive redundancy at multip
 ### Documentation
 - [01 Architecture & Design](docs/01-Architecture.md)
 - [02 Network Design & VIPs](docs/02-Network-Design.md)
-- [03 PKI and TSIG Security](docs/03-PKI-and-TSIG.md)
-- [04 Knot DNS Installation](docs/04-Knot-Installation.md)
+- [03 Knot DNS Installation](docs/03-Knot-Installation.md)
+- [04 PKI and TSIG Security](docs/04-PKI-and-TSIG.md)
 - [05 Knot DNS Configuration](docs/05-Knot-Configuration.md)
 - [06 Zone Files & Templates](docs/06-Zone-Files.md)
 - [07 dnsdist Configuration](docs/07-dnsdist.md)
