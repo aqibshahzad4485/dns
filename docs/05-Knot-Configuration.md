@@ -30,6 +30,5 @@ In production, a tool like `dnstap-receiver` or Vector listens on this socket, p
 
 ## TSIG Security
 Keys are heavily utilized.
-- `A1` -> `B1` uses `tsig-site-sync`
-- `A1` -> `A2/A3` uses `tsig-local-a`
-- `B1` -> `B2/B3` uses `tsig-local-b`
+- `A1` <-> `B1` uses `tsig-site-sync`
+- Masters (`A1`, `B1`) -> Slaves (`A2/A3`, `B2/B3`) use `tsig-master-slave`
